@@ -63,7 +63,7 @@ function App() {
             <div className="challenge" key={year + "-" + day}>
               <div className="data-wrapper">
                 <div className="title">
-                  {year} | Day {day}
+                  {year} - Day {day}
                 </div>
                 <div className="status-wrapper">
                   <div className="star">
