@@ -11,27 +11,33 @@ function App() {
 
   const perfToText = (perf: Perf) => {
     switch (perf) {
-      case Perf.NotComplete:
-        return "";
+      case Perf.Ultra:
+        return "<5ms";
       case Perf.Fast:
         return "<50ms";
       case Perf.Mediocre:
         return "<200ms";
       case Perf.Slow:
         return ">500ms";
+      case Perf.NotComplete:
+      default:
+        return "";
     }
   };
 
   const perfToClass = (perf: Perf) => {
     switch (perf) {
-      case Perf.NotComplete:
-        return "";
+      case Perf.Ultra:
+        return "ultra";
       case Perf.Fast:
         return "fast";
       case Perf.Mediocre:
         return "mediocre";
       case Perf.Slow:
         return "slow";
+      case Perf.NotComplete:
+      default:
+        return "";
     }
   };
 
@@ -47,11 +53,13 @@ function App() {
     else return perfToClass(a);
   };
 
-  const runFn = (fn: () => void) => {
+  const runFn = (fn: () => void, year: number, day: number) => {
+    console.log(`-- Running ${year} - Day ${day} --`);
     const start = performance.now();
     fn();
     const end = performance.now();
     console.log("Performance:", end - start, "ms");
+    console.log('--------------------------');
   };
 
   return (
@@ -90,7 +98,7 @@ function App() {
               </div>
               <div className="button-wrapper">
                 {fn && (
-                  <button className="button" onClick={() => runFn(fn)}>
+                  <button className="button" onClick={() => runFn(fn, year, day)}>
                     Run
                   </button>
                 )}

@@ -1,7 +1,9 @@
+import { findElvenCalories } from "../2022-01/elvenCalories";
 import { elvenPathFinder } from "../2022-12/findpath";
 
 export enum Perf {
   NotComplete = 0,
+  Ultra = -1,
   Fast = 1,
   Mediocre = 2,
   Slow = 3,
@@ -16,6 +18,13 @@ interface Challenge {
 }
 
 export const challenges: Challenge[] = [
+  {
+    year: 2022,
+    day: 1,
+    fn: findElvenCalories,
+    part1: Perf.Ultra,
+    part2: Perf.Ultra,
+  },
   {
     year: 2022,
     day: 12,
