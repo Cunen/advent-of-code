@@ -1,0 +1,93 @@
+#root {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  background-color: #282c34;
+  padding: 32px 64px;
+  color: white;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+.App {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 16px;
+  max-width: 752px;
+}
+
+.data-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 128px;
+  height: 56px;
+}
+
+.status-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.star {
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  overflow: hidden;
+
+}
+
+.star > div {
+  width: 100%;
+  height: 100%;
+}
+
+.star .gold {
+  background-color: #ffc500;
+}
+
+.star .silver {
+  background-color: #c7c6c3;
+}
+
+.challenge {
+  display: flex;
+  border-radius: 4px;
+  background-color: #14171c;
+  padding: 16px;
+}
+
+.button-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 80px;
+  height: 56px;
+}
+
+.performance {
+  font-style: italic;
+}
+
+.performance.fast { color: #01ff01; }
+.performance.mediocre { color: #f9ff01; }
+.performance.slow { color: #ff2601; }
+
+.button {
+  border-radius: 4px;
+  padding: 0 16px;
+  height: 40px;
+  border: 0px;
+  background-color: #2b2b49;
+  color: white;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #47477d;
+}
