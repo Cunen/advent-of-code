@@ -74,6 +74,7 @@
   font-style: italic;
 }
 
+.performance.impossible { color: #ff00c6; }
 .performance.ultra { color: #01ff01; }
 .performance.fast { color: #009fff; }
 .performance.mediocre { color: #f9ff01; }

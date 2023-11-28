@@ -2,6 +2,8 @@ import { findElvenCalories } from "../2022-01/elvenCalories";
 import { RPSBattle } from "../2022-02/rpsSimulator";
 import { organizeRucksack } from "../2022-03/rucksackReorganization";
 import { campCleanup } from "../2022-04/campCleanup";
+import { supplyStacks } from "../2022-05/supplyStacks";
+import { tuningTrouble } from "../2022-06/tuningTrouble";
 import { elvenPathFinder } from "../2022-12/findpath";
 
 export enum Perf {
@@ -10,6 +12,7 @@ export enum Perf {
   Fast = 1,
   Mediocre = 2,
   Slow = 3,
+  Impossible = 4,
 }
 
 interface Challenge {
@@ -48,6 +51,20 @@ export const challenges: Challenge[] = [
     fn: campCleanup,
     part1: Perf.Ultra,
     part2: Perf.Ultra,
+  },
+  {
+    year: 2022,
+    day: 5,
+    fn: supplyStacks,
+    part1: Perf.Ultra,
+    part2: Perf.Ultra,
+  },
+  {
+    year: 2022,
+    day: 6,
+    fn: tuningTrouble,
+    part1: Perf.Fast,
+    part2: Perf.Fast,
   },
   {
     year: 2022,

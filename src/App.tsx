@@ -11,6 +11,8 @@ function App() {
 
   const perfToText = (perf: Perf) => {
     switch (perf) {
+      case Perf.Impossible:
+        return "<1ms";
       case Perf.Ultra:
         return "<5ms";
       case Perf.Fast:
@@ -27,6 +29,8 @@ function App() {
 
   const perfToClass = (perf: Perf) => {
     switch (perf) {
+      case Perf.Impossible:
+        return "impossible";
       case Perf.Ultra:
         return "ultra";
       case Perf.Fast:
@@ -59,7 +63,7 @@ function App() {
     fn();
     const end = performance.now();
     console.log("Performance:", (end - start).toFixed(1), "ms");
-    console.log('--------------------------');
+    console.log("--------------------------");
   };
 
   return (
@@ -98,7 +102,10 @@ function App() {
               </div>
               <div className="button-wrapper">
                 {fn && (
-                  <button className="button" onClick={() => runFn(fn, year, day)}>
+                  <button
+                    className="button"
+                    onClick={() => runFn(fn, year, day)}
+                  >
                     Run
                   </button>
                 )}
