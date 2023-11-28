@@ -4,6 +4,7 @@ import { organizeRucksack } from "../2022-03/rucksackReorganization";
 import { campCleanup } from "../2022-04/campCleanup";
 import { supplyStacks } from "../2022-05/supplyStacks";
 import { tuningTrouble } from "../2022-06/tuningTrouble";
+import { noSpaceOnDevice } from "../2022-07/noSpaceOnDevice";
 import { elvenPathFinder } from "../2022-12/findpath";
 
 export enum Perf {
@@ -65,6 +66,11 @@ export const challenges: Challenge[] = [
     fn: tuningTrouble,
     part1: Perf.Fast,
     part2: Perf.Fast,
+  },
+  {
+    year: 2022,
+    day: 7,
+    fn: noSpaceOnDevice
   },
   {
     year: 2022,
