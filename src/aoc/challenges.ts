@@ -1,6 +1,7 @@
 import { findElvenCalories } from "../2022-01/elvenCalories";
 import { RPSBattle } from "../2022-02/rpsSimulator";
 import { organizeRucksack } from "../2022-03/rucksackReorganization";
+import { campCleanup } from "../2022-04/campCleanup";
 import { elvenPathFinder } from "../2022-12/findpath";
 
 export enum Perf {
@@ -38,6 +39,13 @@ export const challenges: Challenge[] = [
     year: 2022,
     day: 3,
     fn: organizeRucksack,
+    part1: Perf.Ultra,
+    part2: Perf.Ultra,
+  },
+  {
+    year: 2022,
+    day: 4,
+    fn: campCleanup,
     part1: Perf.Ultra,
     part2: Perf.Ultra,
   },
