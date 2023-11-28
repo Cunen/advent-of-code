@@ -58,7 +58,7 @@ function App() {
     const start = performance.now();
     fn();
     const end = performance.now();
-    console.log("Performance:", end - start, "ms");
+    console.log("Performance:", (end - start).toFixed(1), "ms");
     console.log('--------------------------');
   };
 

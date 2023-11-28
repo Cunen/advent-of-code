@@ -1,4 +1,5 @@
 import { findElvenCalories } from "../2022-01/elvenCalories";
+import { RPSBattle } from "../2022-02/rpsSimulator";
 import { elvenPathFinder } from "../2022-12/findpath";
 
 export enum Perf {
@@ -22,6 +23,13 @@ export const challenges: Challenge[] = [
     year: 2022,
     day: 1,
     fn: findElvenCalories,
+    part1: Perf.Ultra,
+    part2: Perf.Ultra,
+  },
+  {
+    year: 2022,
+    day: 2,
+    fn: RPSBattle,
     part1: Perf.Ultra,
     part2: Perf.Ultra,
   },
