@@ -5,6 +5,7 @@ import { campCleanup } from "../2022-04/campCleanup";
 import { supplyStacks } from "../2022-05/supplyStacks";
 import { tuningTrouble } from "../2022-06/tuningTrouble";
 import { noSpaceOnDevice } from "../2022-07/noSpaceOnDevice";
+import { treetopTreeHouse } from "../2022-08/treetopTreeHouse";
 import { elvenPathFinder } from "../2022-12/findpath";
 
 export enum Perf {
@@ -73,6 +74,13 @@ export const challenges: Challenge[] = [
     fn: noSpaceOnDevice,
     part1: Perf.Ultra,
     part2: Perf.Ultra,
+  },
+  {
+    year: 2022,
+    day: 8,
+    fn: treetopTreeHouse,
+    part1: Perf.Fast,
+    part2: Perf.Fast,
   },
   {
     year: 2022,
