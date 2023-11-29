@@ -70,7 +70,9 @@ export const challenges: Challenge[] = [
   {
     year: 2022,
     day: 7,
-    fn: noSpaceOnDevice
+    fn: noSpaceOnDevice,
+    part1: Perf.Ultra,
+    part2: Perf.Ultra,
   },
   {
     year: 2022,
