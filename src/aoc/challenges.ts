@@ -7,6 +7,7 @@ import { tuningTrouble } from "../2022-06/tuningTrouble";
 import { noSpaceOnDevice } from "../2022-07/noSpaceOnDevice";
 import { treetopTreeHouse } from "../2022-08/treetopTreeHouse";
 import { ropeBridge } from "../2022-09/ropeBridge";
+import { cathodeRayTube } from "../2022-10/cathodeRayTube";
 import { elvenPathFinder } from "../2022-12/findpath";
 
 export enum Perf {
@@ -89,6 +90,11 @@ export const challenges: Challenge[] = [
     fn: ropeBridge,
     part1: Perf.Fast,
     part2: Perf.Fast,
+  },
+  {
+    year: 2022,
+    day: 10,
+    fn: cathodeRayTube,
   },
   {
     year: 2022,
