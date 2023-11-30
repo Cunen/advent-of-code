@@ -20,6 +20,8 @@ function App() {
       case Perf.Mediocre:
         return "<200ms";
       case Perf.Slow:
+        return "<500ms";
+      case Perf.Terrible:
         return ">500ms";
       case Perf.NotComplete:
       default:
@@ -29,6 +31,8 @@ function App() {
 
   const perfToClass = (perf: Perf) => {
     switch (perf) {
+      case Perf.Terrible:
+        return "terrible";
       case Perf.Impossible:
         return "impossible";
       case Perf.Ultra:
@@ -68,7 +72,46 @@ function App() {
 
   return (
     <>
-      <h1>Advent of Code</h1>
+      <div className="title-wrapper">
+        <div
+          className={
+            "tag performance " + getPerfClass(Perf.Impossible, Perf.Impossible)
+          }
+        >
+          {getPerfText(Perf.Impossible, Perf.Impossible)}
+        </div>
+        <div
+          className={"tag performance " + getPerfClass(Perf.Ultra, Perf.Ultra)}
+        >
+          {getPerfText(Perf.Ultra, Perf.Ultra)}
+        </div>
+        <div
+          className={"tag performance " + getPerfClass(Perf.Fast, Perf.Fast)}
+        >
+          {getPerfText(Perf.Fast, Perf.Fast)}
+        </div>
+
+        <h1>Advent of Code</h1>
+        <div
+          className={
+            "tag performance " + getPerfClass(Perf.Mediocre, Perf.Mediocre)
+          }
+        >
+          {getPerfText(Perf.Mediocre, Perf.Mediocre)}
+        </div>
+        <div
+          className={"tag performance " + getPerfClass(Perf.Slow, Perf.Slow)}
+        >
+          {getPerfText(Perf.Slow, Perf.Slow)}
+        </div>
+        <div
+          className={
+            "tag performance " + getPerfClass(Perf.Terrible, Perf.Terrible)
+          }
+        >
+          {getPerfText(Perf.Terrible, Perf.Terrible)}
+        </div>
+      </div>
       <div className="App">
         {challenges.map(({ year, day, part1, part2, fn }) => {
           return (

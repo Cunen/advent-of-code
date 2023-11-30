@@ -18,6 +18,7 @@ export enum Perf {
   Mediocre = 2,
   Slow = 3,
   Impossible = 4,
+  Terrible = 5,
 }
 
 interface Challenge {

@@ -74,11 +74,26 @@
   font-style: italic;
 }
 
+.performance.terrible { color: #ff2601; }
 .performance.impossible { color: #ff00c6; }
 .performance.ultra { color: #01ff01; }
 .performance.fast { color: #009fff; }
 .performance.mediocre { color: #f9ff01; }
-.performance.slow { color: #ff2601; }
+.performance.slow { color: #ff9001; }
+
+.title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.tag {
+  display: flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 20px;;
+  background-color: #14171c;
+}
 
 .button {
   border-radius: 4px;
