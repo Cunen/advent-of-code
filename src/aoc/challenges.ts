@@ -96,6 +96,8 @@ export const challenges: Challenge[] = [
     year: 2022,
     day: 10,
     fn: cathodeRayTube,
+    part1: Perf.Fast,
+    part2: Perf.Fast,
   },
   {
     year: 2022,
