@@ -9,6 +9,7 @@ import { treetopTreeHouse } from "../2022-08/treetopTreeHouse";
 import { ropeBridge } from "../2022-09/ropeBridge";
 import { cathodeRayTube } from "../2022-10/cathodeRayTube";
 import { elvenPathFinder } from "../2022-12/findpath";
+import { probosciedaVolcanium } from "../2022-16/probosciedaVolcanium";
 
 export enum Perf {
   NotComplete = 0,
@@ -102,6 +103,13 @@ export const challenges: Challenge[] = [
     part1: Perf.Fast,
     part2: Perf.Fast,
     fn: elvenPathFinder,
+  },
+  {
+    year: 2022,
+    day: 16,
+    fn: probosciedaVolcanium,
+    part1: Perf.Slow,
+    part2: Perf.Slow,
   },
   { year: 2023, day: 1 },
   { year: 2023, day: 2 },
