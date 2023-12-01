@@ -10,7 +10,7 @@ import { ropeBridge } from "../2022-09/ropeBridge";
 import { cathodeRayTube } from "../2022-10/cathodeRayTube";
 import { elvenPathFinder } from "../2022-12/findpath";
 import { probosciedaVolcanium } from "../2022-16/probosciedaVolcanium";
-import { day1of2022 } from "../2023-01/tbd";
+import { trebuchet } from "../2023-01/trebuchet";
 
 export enum Perf {
   NotComplete = 0,
@@ -115,7 +115,7 @@ export const challenges: Challenge[] = [
     part1: Perf.Slow,
     part2: Perf.Slow,
   },
-  { year: 2023, day: 1, fn: day1of2022 },
+  { year: 2023, day: 1, fn: trebuchet, part1: Perf.Ultra, part2: Perf.Ultra },
   { year: 2023, day: 2 },
   { year: 2023, day: 3 },
   { year: 2023, day: 4 },
