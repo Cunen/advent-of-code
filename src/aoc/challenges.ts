@@ -11,6 +11,7 @@ import { cathodeRayTube } from "../2022-10/cathodeRayTube";
 import { elvenPathFinder } from "../2022-12/findpath";
 import { probosciedaVolcanium } from "../2022-16/probosciedaVolcanium";
 import { trebuchet } from "../2023-01/trebuchet";
+import { cubeConundrum } from "../2023-02/cubeConundrum";
 
 export enum Perf {
   NotComplete = 0,
@@ -116,7 +117,13 @@ export const challenges: Challenge[] = [
     part2: Perf.Slow,
   },
   { year: 2023, day: 1, fn: trebuchet, part1: Perf.Ultra, part2: Perf.Ultra },
-  { year: 2023, day: 2 },
+  {
+    year: 2023,
+    day: 2,
+    fn: cubeConundrum,
+    part1: Perf.Ultra,
+    part2: Perf.Ultra,
+  },
   { year: 2023, day: 3 },
   { year: 2023, day: 4 },
   { year: 2023, day: 5 },
