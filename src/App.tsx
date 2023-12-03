@@ -112,50 +112,52 @@ function App() {
           {getPerfText(Perf.Terrible, Perf.Terrible)}
         </div>
       </div>
-      <div className="App">
-        {challenges.map(({ year, day, part1, part2, fn }) => {
-          return (
-            <div className="challenge" key={year + "-" + day}>
-              <div className="data-wrapper">
-                <div className="title">
-                  {year} - Day {day}
-                </div>
-                <div className="status-wrapper">
-                  <div className="star">
-                    {renderStar(
-                      part1 ?? Perf.NotComplete,
-                      part2 ?? Perf.NotComplete
-                    )}
+      <div className="scroller">
+        <div className="App">
+          {challenges.map(({ year, day, part1, part2, fn }) => {
+            return (
+              <div className="challenge" key={year + "-" + day}>
+                <div className="data-wrapper">
+                  <div className="title">
+                    {year} - Day {day}
                   </div>
-                  <div
-                    className={
-                      "performance " +
-                      getPerfClass(
+                  <div className="status-wrapper">
+                    <div className="star">
+                      {renderStar(
                         part1 ?? Perf.NotComplete,
                         part2 ?? Perf.NotComplete
-                      )
-                    }
-                  >
-                    {getPerfText(
-                      part1 ?? Perf.NotComplete,
-                      part2 ?? Perf.NotComplete
-                    )}
+                      )}
+                    </div>
+                    <div
+                      className={
+                        "performance " +
+                        getPerfClass(
+                          part1 ?? Perf.NotComplete,
+                          part2 ?? Perf.NotComplete
+                        )
+                      }
+                    >
+                      {getPerfText(
+                        part1 ?? Perf.NotComplete,
+                        part2 ?? Perf.NotComplete
+                      )}
+                    </div>
                   </div>
                 </div>
+                <div className="button-wrapper">
+                  {fn && (
+                    <button
+                      className="button"
+                      onClick={() => runFn(fn, year, day)}
+                    >
+                      Run
+                    </button>
+                  )}
+                </div>
               </div>
-              <div className="button-wrapper">
-                {fn && (
-                  <button
-                    className="button"
-                    onClick={() => runFn(fn, year, day)}
-                  >
-                    Run
-                  </button>
-                )}
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </>
   );
