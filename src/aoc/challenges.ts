@@ -13,6 +13,7 @@ import { probosciedaVolcanium } from "../2022-16/probosciedaVolcanium";
 import { trebuchet } from "../2023-01/trebuchet";
 import { cubeConundrum } from "../2023-02/cubeConundrum";
 import { gearRatios } from "../2023-03/gearRatios";
+import { scratchcards } from "../2023-04/scratchcards";
 
 export enum Perf {
   NotComplete = 0,
@@ -126,7 +127,7 @@ export const challenges: Challenge[] = [
     part2: Perf.Ultra,
   },
   { year: 2023, day: 3, fn: gearRatios, part1: Perf.Ultra, part2: Perf.Ultra  },
-  { year: 2023, day: 4 },
+  { year: 2023, day: 4, fn: scratchcards },
   { year: 2023, day: 5 },
   { year: 2023, day: 6 },
   { year: 2023, day: 7 },
