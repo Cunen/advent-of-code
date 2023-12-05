@@ -39,6 +39,7 @@ const seedToLocation = (num: number) => {
 };
 
 const createRange = (array: string[], name: Converter) => {
+  if (converters[name].length > 0) return;
   array.forEach((row) => {
     const split = row.split(" ");
     if (split.length <= 2) return;
@@ -49,6 +50,51 @@ const createRange = (array: string[], name: Converter) => {
   });
 };
 
+const getPossibleRanges = (
+  next: number[][],
+  ranges: {
+    from: number;
+    to: number;
+  }[]
+) => {
+  const arr = [...next];
+  const min = next.reduce((sum, n) => (n[0] < sum ? n[0] : sum), Infinity);
+  if (min > 0) arr.push([0, 0, min]);
+  return arr
+    .map((range) => {
+      const from = range[0];
+      const to = range[0] + range[2];
+      const isInRange = ranges
+        .map((r) => {
+          const topEnd = from <= r.to && to >= r.to;
+          const bottomEnd = from <= r.from && to >= r.from;
+          if (topEnd || bottomEnd) {
+            return {
+              fDiff: Math.max(r.from - from, 0),
+              tDiff: Math.max(to - r.to, 0),
+            };
+          }
+          return null;
+        })
+        .filter(Boolean) as {
+        fDiff: number;
+        tDiff: number;
+      }[];
+      if (isInRange.length > 0) {
+        const fMax = Math.min(...isInRange.map((ir) => ir.fDiff));
+        const tMax = Math.min(...isInRange.map((ir) => ir.tDiff));
+        const adjFrom = range[1] - fMax;
+        const adjTo = range[1] + range[2] - tMax;
+        return { from: adjFrom, to: adjTo };
+      }
+      return null;
+    })
+    .filter(Boolean) as {
+    from: number;
+    to: number;
+  }[];
+};
+
 export const seedFertilizer = () => {
   const array = prodInput.split("\n\n");
 
@@ -57,11 +103,11 @@ export const seedFertilizer = () => {
   const seedNums = seeds.map(Number);
 
   // Part 1
-  const seedRanges: { from: number, to: number}[] = [];
+  const seedRanges: { from: number; to: number }[] = [];
   seedNums.forEach((num, i) => {
     if (i % 2 === 1) {
       const from = seedNums[i - 1];
-      const to = num + seedNums[i -1];
+      const to = num + seedNums[i - 1];
       seedRanges.push({ from, to });
     }
   });
@@ -74,18 +120,50 @@ export const seedFertilizer = () => {
   createRange(array.at(6)?.split("\n") || [], "temperatureToHumidity");
   createRange(array.at(7)?.split("\n") || [], "humidityToLocation");
 
-  // Part 1 (322500873)
+  // Part 1 (322 500 873)
   console.log("Part 1:", Math.min(...seedNums.map(seedToLocation)));
 
-  let min = Infinity;
-  // WARNING THIS RUNS FOR 7.5 minutes
-  // seedRanges.forEach(range => {
-  //   for (let i = range.from; i < range.to; i++) {
-  //     const location = seedToLocation(i);
-  //     if (location < min) min = location;
-  //   }
-  // });
+  const lowestLocation = converters["humidityToLocation"].reduce(
+    (sum, array) => (array[0] < sum ? array[0] : sum),
+    Infinity
+  );
 
-  // Part 2 (108956227)
-  console.log("Part 2:", min);
+  const locationRanges = [{ from: 0, to: lowestLocation }];
+  const humidityRanges = getPossibleRanges(
+    converters["temperatureToHumidity"],
+    locationRanges
+  );
+  const temperatureRanges = getPossibleRanges(
+    converters["lightToTemperature"],
+    humidityRanges
+  );
+  const lightRanges = getPossibleRanges(
+    converters["waterToLight"],
+    temperatureRanges
+  );
+  const waterRanges = getPossibleRanges(
+    converters["fertilizerToWater"],
+    lightRanges
+  );
+  const fertilizerRanges = getPossibleRanges(
+    converters["soilToFertilizer"],
+    waterRanges
+  );
+  const soilRanges = getPossibleRanges(
+    converters["seedToSoil"],
+    fertilizerRanges
+  );
+
+  
+  const lowestLocations = soilRanges.map(soilRange => {
+    const seedLocation = seedToLocation(soilRange.from);
+    const smaller = seedLocation < lowestLocation;
+    const inRange = seedRanges.some(({ from, to }) => {
+      return soilRange.from >= from && soilRange.from <= to
+    });
+    return smaller && inRange ? seedLocation : Infinity;
+  });
+
+  // Part 2 (108 956 227)
+  console.log("Part 2:", Math.min(...lowestLocations));
 };
