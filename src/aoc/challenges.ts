@@ -143,7 +143,7 @@ export const challenges: Challenge[] = [
     part1: Perf.Ultra,
     part2: Perf.Ultra,
   },
-  { year: 2023, day: 6, fn: waitForIt, part1: Perf.Fast, part2: Perf.Fast },
+  { year: 2023, day: 6, fn: waitForIt, part1: Perf.Impossible, part2: Perf.Impossible },
   { year: 2023, day: 7 },
   { year: 2023, day: 8 },
   { year: 2023, day: 9 },

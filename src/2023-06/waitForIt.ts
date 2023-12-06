@@ -1,34 +1,25 @@
 import { prodInput } from "./input";
 
-const getMinHold = (time: number, distance: number) => {
-  let startMs = Math.ceil(distance / time);
-  let dist = (time - startMs) * startMs;
-  while (dist <= distance) {
-    startMs++;
-    dist = (time - startMs) * startMs;
-  }
-  return startMs;
-};
+const quadr = (b: number, c: number) =>
+  Math.ceil((-1 * b + Math.sqrt(b * b - 4 * c)) / (2 * -1));
+
+const waysToWin = (time: number, ms: number) => time - 2 * ms + 1;
 
 export const waitForIt = () => {
   const [times, distances] = prodInput.split("\n");
   const timesArray = (times.match(/[0-9]+/g) || []).map(Number);
   const distanceArray = (distances.match(/[0-9]+/g) || []).map(Number);
-
-  const part1 = timesArray.reduce((mult, time, i) => {
-    const distance = distanceArray[i];
-    const minHold = getMinHold(time, distance);
-    const waysToWin = time - 2 * minHold + 1;
-    return mult * Math.max(waysToWin, 1);
-  }, 1);
-
-  // Part 1
-  console.log("Part 1", part1);
-
-  // Part 2
   const singleTime = Number(timesArray.join(""));
   const singleDistance = Number(distanceArray.join(""));
-  const singleMinHold = getMinHold(singleTime, singleDistance);
-  const singleWaysToWin = singleTime - 2 * singleMinHold + 1;
-  console.log("Part 2:", singleWaysToWin);
+  const waysToWinMultiplied = timesArray.reduce(
+    (mult, time, i) => mult * waysToWin(time, quadr(time, distanceArray[i])),
+    1
+  );
+  // Part 1
+  console.log("Part 1", waysToWinMultiplied);
+  // Part 2
+  console.log(
+    "Part 2:",
+    waysToWin(singleTime, quadr(singleTime, singleDistance))
+  );
 };
