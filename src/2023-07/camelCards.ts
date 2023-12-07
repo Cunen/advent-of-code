@@ -33,26 +33,9 @@ const cardRanks: Record<Card, string> = {
 
 const jokerRanks: Record<Card, string> = { ...cardRanks, J: "01" };
 
-const getHandStrength = (asd: Partial<Record<Card, number>>) => {
-  const values = Object.values(asd);
-  const max = Math.max(...values);
-  const len = values.length;
-  // Five of a kind
-  if (len === 1) return "21";
-  // Four of a kind
-  else if (max === 4) return "20";
-  // Full house
-  else if (len === 2 && max === 3) return "19";
-  // Three of a kind
-  else if (len === 3 && max === 3) return "18";
-  // Two Pairs
-  else if (len === 3 && max === 2) return "17";
-  // Single Pair
-  else if (len === 4 && max === 2) return "16";
-  // All Unique
-  else if (len === 5) return "15";
-  console.warn("Detected no hand result");
-  return "0";
+const getHandStrength = (handRecord: Partial<Record<Card, number>>) => {
+  const values = Object.values(handRecord);
+  return [6 - values.length, Math.max(...values)].join("");
 };
 
 const getHandScore = (cards: string, joker = false) => {
@@ -101,6 +84,6 @@ export const camelCards = () => {
 
   // Part 2:
   rankedHands.sort((a, b) => a.jScore - b.jScore);
-  const sum2 = rankedHands.reduce((s, h, i) => sum + h.points * (i + 1), 0);
+  const sum2 = rankedHands.reduce((s, h, i) => s + h.points * (i + 1), 0);
   console.log("Part 2:", sum2);
 };
