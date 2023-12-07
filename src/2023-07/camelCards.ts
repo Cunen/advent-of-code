@@ -62,26 +62,23 @@ const getHandScore = (cards: string, joker = false) => {
     partial[card] = 1 + (partial[card] ?? 0);
     return sum + cardRanks[card];
   }, "");
+  return Number(getHandStrength(partial) + score);
+};
 
-  const jPartial: Partial<Record<Card, number>> = {};
-  let jCount = 0;
-  const jScore = cardArray.reduce((sum, card) => {
+const getJokerScore = (cards: string) => {
+  const cardArray = Array.from(cards) as Card[];
+  const partial: Partial<Record<Card, number>> = {};
+  let count = 0;
+  const score = cardArray.reduce((sum, card) => {
     if (card !== "J") {
-      jPartial[card] = 1 + (jPartial[card] ?? 0);
-    } else {
-      jCount++;
-    }
+      partial[card] = 1 + (partial[card] ?? 0);
+    } else count++;
     return sum + jokerRanks[card];
   }, "");
-
-  const [biggest] = Object.entries(jPartial).sort((a, b) => b[1] - a[1])[0] || [
-    "J",
-  ];
+  const sortedPartial = Object.entries(partial).sort((a, b) => b[1] - a[1]);
+  const [biggest] = sortedPartial[0] || ["J"];
   const big = biggest as Card;
-  jPartial[big] = jCount + (jPartial[big] ?? 0);
-
-  if (joker) return Number(getHandStrength(jPartial) + jScore);
-
+  partial[big] = count + (partial[big] ?? 0);
   return Number(getHandStrength(partial) + score);
 };
 
@@ -91,7 +88,7 @@ export const camelCards = () => {
     const [cards, points] = hand.split(" ");
     return {
       score: getHandScore(cards),
-      jScore: getHandScore(cards, true),
+      jScore: getJokerScore(cards),
       points: Number(points),
       cards,
     };
