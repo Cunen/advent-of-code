@@ -17,6 +17,7 @@ import { scratchcards } from "../2023-04/scratchcards";
 import { seedFertilizer } from "../2023-05/giveSeedFertilizer";
 import { waitForIt } from "../2023-06/waitForIt";
 import { camelCards } from "../2023-07/camelCards";
+import { wasteland } from "../2023-08/hauntedWasteland";
 
 export enum Perf {
   NotComplete = 0,
@@ -152,7 +153,7 @@ export const challenges: Challenge[] = [
     part2: Perf.Impossible,
   },
   { year: 2023, day: 7, fn: camelCards, part1: Perf.Fast, part2: Perf.Fast },
-  { year: 2023, day: 8 },
+  { year: 2023, day: 8, fn: wasteland, part1: Perf.Fast, part2: Perf.Fast },
   { year: 2023, day: 9 },
   { year: 2023, day: 10 },
   { year: 2023, day: 11 },
