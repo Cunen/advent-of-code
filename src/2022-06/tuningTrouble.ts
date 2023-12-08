@@ -1,12 +1,5 @@
+import { uniqueString } from "../aoc/utils";
 import { prodInput } from "./input";
-
-const isUniqString = (str: string) => {
-  const array = Array.from(str);
-  const hasDuplicate = array.some(
-    (char) => array.indexOf(char) !== array.lastIndexOf(char)
-  );
-  return !hasDuplicate;
-};
 
 export const tuningTrouble = () => {
   let i = 0;
@@ -15,8 +8,8 @@ export const tuningTrouble = () => {
   while (!len14found) {
     const len4 = prodInput.substring(i, i + 4);
     const len14 = prodInput.substring(i, i + 14);
-    if (!len4found && isUniqString(len4)) len4found = i + 4;
-    if (!len14found && isUniqString(len14)) len14found = i + 14;
+    if (!len4found && uniqueString(len4)) len4found = i + 4;
+    if (!len14found && uniqueString(len14)) len14found = i + 14;
     i++;
   }
 
