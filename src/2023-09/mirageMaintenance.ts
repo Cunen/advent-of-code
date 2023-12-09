@@ -1,4 +1,8 @@
-import { duplicateArray, findNumberValuesFromString, puzzleArray } from "../aoc/utils";
+import {
+  duplicateArray,
+  findNumberValuesFromString,
+  puzzleArray,
+} from "../aoc/utils";
 import { prodInput } from "./input";
 
 /** [1,3,6] -> [2,3] */
