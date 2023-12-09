@@ -16,15 +16,15 @@ export const stringToNumericArray = (str: string) =>
 
 /** Converts ..123...345.. to ["123", "345"] */
 export const findNumbersFromString = (str: string): string[] =>
-  str.match(/[0-9]/g) || [];
+  str.match(/-?[0-9]+/g) || [];
 
 /** Converts ..1A3...3B5.. to ["1A3", "3B5"] */
 export const findCharsAndNumbersFromString = (str: string): string[] =>
-  str.match(/[0-9a-zA-Z]/g) || [];
+  str.match(/-?[0-9a-zA-Z]+/g) || [];
 
 /** Converts ..aBC...bCD.. to ["aBC", "bCD"] */
 export const findCharsFromString = (str: string): string[] =>
-  str.match(/[a-zA-Z]/g) || [];
+  str.match(/[a-zA-Z]+/g) || [];
 
 /** Converts ..123...345.. to [123, 345] */
 export const findNumberValuesFromString = (str: string) =>
@@ -43,6 +43,11 @@ export const uniqueArray = (array: (string | number)[]) => {
   return array.length === new Set(array).size;
 };
 
+/** Checks if array consists of duplicate values */
+export const duplicateArray = (array: (string | number)[]) => {
+  return new Set(array).size === 1;
+};
+
 /** Checks if string only has unique characters */
 export const uniqueString = (string: string) => {
   return uniqueArray(Array.from(string));
@@ -52,3 +57,6 @@ export const uniqueString = (string: string) => {
 export const uniqueNumber = (number: number) => {
   return uniqueArray(Array.from(number.toString()));
 };
+
+/** Splits puzzle input into an array of strings */
+export const puzzleArray = (string: string) => string.split("\n");
