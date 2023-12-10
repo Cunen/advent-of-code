@@ -1,4 +1,4 @@
-import { puzzleArray, stringToArray } from "../aoc/utils";
+import { puzzleArray, stringToArray, xyToKey } from "../aoc/utils";
 import { prodInput } from "./input";
 
 type Symbol = "S" | "-" | "|" | "L" | "F" | "7" | "J";
@@ -33,36 +33,33 @@ const insiders = new Set<string>();
 
 const lookRight = (xPos: number, yPos: number) => {
   let xLoop = xPos + 1;
-  while (!paths[`${xLoop}-${yPos}`] && xLoop <= 140) {
-    insiders.add(`${xLoop}-${yPos}`);
+  while (!paths[xyToKey(xLoop, yPos)] && xLoop <= 140) {
+    insiders.add(xyToKey(xLoop, yPos));
     xLoop++;
   }
-  if (xLoop >= 140) console.error("RIGHT OUT OF RANGE");
 };
 const lookLeft = (xPos: number, yPos: number) => {
   let xLoop = xPos - 1;
-  while (!paths[`${xLoop}-${yPos}`] && xLoop >= 0) {
-    insiders.add(`${xLoop}-${yPos}`);
+  while (!paths[xyToKey(xLoop, yPos)] && xLoop >= 0) {
+    insiders.add(xyToKey(xLoop, yPos));
     xLoop--;
   }
-  if (xLoop <= 0) console.error("LEFT OUT OF RANGE");
 };
 const lookUp = (xPos: number, yPos: number) => {
   let yLoop = yPos - 1;
-  while (!paths[`${xPos}-${yLoop}`] && yLoop >= 0) {
-    insiders.add(`${xPos}-${yLoop}`);
+  while (!paths[xyToKey(xPos, yLoop)] && yLoop >= 0) {
+    insiders.add(xyToKey(xPos, yLoop));
     yLoop--;
   }
-  if (yLoop <= 0) console.error("UP OUT OF RANGE");
 };
 const lookDown = (xPos: number, yPos: number) => {
   let yLoop = yPos + 1;
-  while (!paths[`${xPos}-${yLoop}`] && yLoop <= 140) {
-    insiders.add(`${xPos}-${yLoop}`);
+  while (!paths[xyToKey(xPos, yLoop)] && yLoop <= 140) {
+    insiders.add(xyToKey(xPos, yLoop));
     yLoop++;
   }
-  if (yLoop >= 140) console.error("DOWN OUT OF RANGE");
 };
+
 const generateInsiders = () => {
   Object.entries(paths).forEach(([key, path]) => {
     const { symbol, dir, x, y } = path;
@@ -117,12 +114,12 @@ export const pipeMaze = () => {
   let y = rows.findIndex((r) => r.includes("S"));
   let x = rows[y].indexOf("S");
   // Remember to also mark the starting point S as part of the pipe
-  paths[`${x}-${y}`] = { x, y, dir: "R", symbol: "-" };
+  paths[xyToKey(x, y)] = { x, y, dir: "R", symbol: "-" };
   x++;
   let dir: Dir = "R";
 
   while (rows[y][x] !== "S") {
-    paths[`${x}-${y}`] = { x, y, dir, symbol: rows[y][x] as Symbol };
+    paths[xyToKey(x, y)] = { x, y, dir, symbol: rows[y][x] as Symbol };
     if (dir === "R") x++;
     else if (dir === "L") x--;
     else if (dir === "U") y--;

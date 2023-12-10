@@ -60,3 +60,6 @@ export const uniqueNumber = (number: number) => {
 
 /** Splits puzzle input into an array of strings */
 export const puzzleArray = (string: string) => string.split("\n");
+
+/** Convers X and Y to a "x-y" string key */
+export const xyToKey = (x: number, y: number) => `${x}-${y}`;
