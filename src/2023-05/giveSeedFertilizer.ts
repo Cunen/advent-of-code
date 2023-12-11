@@ -112,6 +112,8 @@ export const seedFertilizer = () => {
     }
   });
 
+  console.log(seedRanges.reduce((a,b) => a + b.to - b.from, 0));
+
   createRange(array.at(1)?.split("\n") || [], "seedToSoil");
   createRange(array.at(2)?.split("\n") || [], "soilToFertilizer");
   createRange(array.at(3)?.split("\n") || [], "fertilizerToWater");

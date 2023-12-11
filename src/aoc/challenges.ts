@@ -20,6 +20,7 @@ import { camelCards } from "../2023-07/camelCards";
 import { wasteland } from "../2023-08/hauntedWasteland";
 import { mirage } from "../2023-09/mirageMaintenance";
 import { pipeMaze } from "../2023-10/pipeMaze";
+import { cosmic } from "../2023-11/cosmicExpansion";
 
 export enum Perf {
   NotComplete = 0,
@@ -74,7 +75,7 @@ export const challenges: Challenge[] = [
   { year: 2023, day: 8, fn: wasteland, part1: Perf.Fast, part2: Perf.Fast },
   { year: 2023, day: 9, fn: mirage, part1: Perf.Ultra, part2: Perf.Ultra },
   { year: 2023, day: 10, fn: pipeMaze, part1: Perf.Fast, part2: Perf.Fast },
-  { year: 2023, day: 11 },
+  { year: 2023, day: 11, fn: cosmic, part1: Perf.Mediocre, part2: Perf.Mediocre },
   { year: 2023, day: 12 },
   { year: 2023, day: 13 },
   { year: 2023, day: 14 },
