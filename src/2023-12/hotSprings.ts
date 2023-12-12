@@ -4,46 +4,58 @@ import { prodInput } from "./input";
 const validate = (str: string, nums: number[], exact = false, tail: string) => {
   const final = !tail.includes("?");
 
-  let ex = final ? true : exact;
-  let string = final ? str + tail : str;
+  const matchExact = final ? true : exact;
+  const string = final ? str + tail : str;
 
   const hashNums = (string.match(/#+/g) || []).map((h) => h.length);
 
-  const poo = hashNums.reduce((a, b) => a + b, 0);
-  const doo = nums.reduce((a, b) => a + b, 0);
+  const hashSum = hashNums.reduce((a, b) => a + b, 0);
+  const numsSum = nums.reduce((a, b) => a + b, 0);
 
-  if (poo > doo) return false;
-
-  if (final && poo !== doo) return false;
+  // There can never be more hashes than nums
+  if (hashSum > numsSum) return false;
+  // Final round, but mismatch in hash & num sums
+  if (final && hashSum !== numsSum) return false;
 
   // All must match
   return !hashNums.some((n, i) => {
     // Non-exact match allows last to be smaller than nums[i]
-    if (i === hashNums.length - 1 && !ex) return n > nums[i];
+    if (i === hashNums.length - 1 && !matchExact) return n > nums[i];
     // Otherwise must match EXACTLY
     return n !== nums[i];
   });
 };
 
-const getVariations = (str: string, nums: number[]): string[] => {
-  if (!str.includes("?")) return [str];
+const cache = new Map<string, number>();
+
+const getVariations = (str: string, nums: number[]): number => {
+  if (!str.includes("?")) return 1;
+
+  const key = [str, nums].join(" ");
+  if (cache.has(key)) return cache.get(key)!;
 
   const index = str.indexOf("?");
   const head = str.substring(0, index);
   const tail = str.substring(index + 1);
 
   const newHeadHash = head + "#";
-  const newHeadDot = head + ".";
-
   const hashValid = validate(newHeadHash, nums, false, tail);
+  // Replace preceding ...#...## --> ##
+  const replacedHash = newHeadHash.replace(/\.*#+\.+#/, "#");
+  const hashNums = [...nums];
+  if (newHeadHash !== replacedHash) hashNums.shift();
+  const hashNum = hashValid ? getVariations(replacedHash + tail, hashNums) : 0;
+
+  const newHeadDot = head + ".";
   const dotValid = validate(newHeadDot, nums, true, tail);
+  // Replace preceding ...#...## --> ##
+  const replacedDot = newHeadDot.replace(/\.*#+\.+#/, "#");
+  const dotNums = [...nums];
+  if (newHeadDot !== replacedDot) dotNums.shift();
+  const dotNum = dotValid ? getVariations(replacedDot + tail, dotNums) : 0;
 
-  const newArray = [];
-
-  if (hashValid) newArray.push(...getVariations(newHeadHash + tail, nums));
-  if (dotValid) newArray.push(...getVariations(newHeadDot + tail, nums));
-
-  return newArray;
+  cache.set(key, hashNum + dotNum);
+  return hashNum + dotNum;
 };
 
 export const hotspring = () => {
@@ -56,8 +68,7 @@ export const hotspring = () => {
     const nums = (n + ",").repeat(1);
 
     const numbers = findNumberValuesFromString(nums);
-    const variations = getVariations(text, numbers);
-    return sum + variations.length;
+    return sum + getVariations(text, numbers);
   }, 0);
 
   console.log(p1);
