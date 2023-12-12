@@ -1,61 +1,64 @@
 import { findNumberValuesFromString, puzzleArray } from "../aoc/utils";
-import { prodInput, testInput } from "./input";
+import { prodInput } from "./input";
+
+const validate = (str: string, nums: number[], exact = false, tail: string) => {
+  const final = !tail.includes("?");
+
+  let ex = final ? true : exact;
+  let string = final ? str + tail : str;
+
+  const hashNums = (string.match(/#+/g) || []).map((h) => h.length);
+
+  const poo = hashNums.reduce((a, b) => a + b, 0);
+  const doo = nums.reduce((a, b) => a + b, 0);
+
+  if (poo > doo) return false;
+
+  if (final && poo !== doo) return false;
+
+  // All must match
+  return !hashNums.some((n, i) => {
+    // Non-exact match allows last to be smaller than nums[i]
+    if (i === hashNums.length - 1 && !ex) return n > nums[i];
+    // Otherwise must match EXACTLY
+    return n !== nums[i];
+  });
+};
+
+const getVariations = (str: string, nums: number[]): string[] => {
+  if (!str.includes("?")) return [str];
+
+  const index = str.indexOf("?");
+  const head = str.substring(0, index);
+  const tail = str.substring(index + 1);
+
+  const newHeadHash = head + "#";
+  const newHeadDot = head + ".";
+
+  const hashValid = validate(newHeadHash, nums, false, tail);
+  const dotValid = validate(newHeadDot, nums, true, tail);
+
+  const newArray = [];
+
+  if (hashValid) newArray.push(...getVariations(newHeadHash + tail, nums));
+  if (dotValid) newArray.push(...getVariations(newHeadDot + tail, nums));
+
+  return newArray;
+};
 
 export const hotspring = () => {
   const inputArray = puzzleArray(prodInput);
 
-  const p1 = inputArray.reduce((total, row, i) => {
-    const [a, b] = row.split(" ");
+  const p1 = inputArray.reduce((sum, row, i) => {
+    const [t, n] = row.split(" ");
 
-    const numbers = findNumberValuesFromString(b);
+    const text = t.repeat(1);
+    const nums = (n + ",").repeat(1);
 
-    const width = a.length;
-    const sum = numbers.reduce((a, b) => a + b);
-    const defaultGaps = numbers.length - 1;
-    const freeGaps = width - sum - defaultGaps;
-
-    const numRay: number[] = new Array(numbers.length - 1).fill(1);
-    let fillArrays: number[][] = [[0, ...numRay, 0]];
-
-    for (let i = 0; i < freeGaps; i++) {
-      let newArrays: number[][] = [];
-      fillArrays.forEach((fillArray) => {
-        fillArray.forEach((num, i) => {
-          const clone = [...fillArray];
-          clone[i]++;
-          newArrays.push(clone);
-        });
-      });
-      fillArrays = newArrays;
-    }
-
-    let possibilities = fillArrays
-      .map((fillArray) => {
-        const str = fillArray.reduce((sum, fill, i) => {
-          const num = numbers.at(i);
-          const add = ".".repeat(fill) + (num ? "#".repeat(num) : "");
-          return sum + add;
-        }, "");
-
-        const invalid = Array.from(str).some((s, i) => {
-          const hash = s === "#";
-          const targetDot = a[i] === ".";
-          const targetHash = a[i] === "#";
-          return (hash && targetDot) || (!hash && targetHash);
-        });
-
-        if (invalid) return "";
-
-        return str;
-      })
-      .filter(Boolean);
-
-    const set = new Set(possibilities);
-    possibilities = Array.from(set);
-
-    return total + possibilities.length;
+    const numbers = findNumberValuesFromString(nums);
+    const variations = getVariations(text, numbers);
+    return sum + variations.length;
   }, 0);
 
-  // Part 1 (7599)
-  console.log("Part 1:", p1);
+  console.log(p1);
 };
