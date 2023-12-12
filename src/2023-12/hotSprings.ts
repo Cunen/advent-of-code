@@ -63,13 +63,23 @@ export const hotspring = () => {
 
   const p1 = inputArray.reduce((sum, row, i) => {
     const [t, n] = row.split(" ");
+    const numbers = findNumberValuesFromString(n);
+    return sum + getVariations(t, numbers);
+  }, 0);
 
-    const text = t.repeat(1);
-    const nums = (n + ",").repeat(1);
+  const p2 = inputArray.reduce((sum, row, i) => {
+    const [t, n] = row.split(" ");
+
+    const text = [t, t, t, t, t].join("?");
+    const nums = (n + ",").repeat(5);
 
     const numbers = findNumberValuesFromString(nums);
     return sum + getVariations(text, numbers);
   }, 0);
 
-  console.log(p1);
+  // Part 1
+  console.log("Part 1:", p1);
+
+  // Part 2
+  console.log("Part 2:", p2);
 };
