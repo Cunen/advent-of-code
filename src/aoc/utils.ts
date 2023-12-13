@@ -63,3 +63,23 @@ export const puzzleArray = (string: string) => string.split("\n");
 
 /** Convers X and Y to a "x-y" string key */
 export const xyToKey = (x: number, y: number) => `${x}-${y}`;
+
+/** Converts rows to columns */
+export const rowsToColumns = (rows: string[]) => {
+  const columns: string[][] = [];
+  rows.forEach((row) => {
+    const rowChars = Array.from(row);
+    rowChars.forEach((char, i) => {
+      if (!columns[i]) columns.push([]);
+      columns[i].push(char);
+    });
+  });
+  return columns.map((c) => c.join(""));
+};
+
+/** Replace characters in string at given index */
+export const strReplaceAt = (str: string, at: number, replacement: string) => {
+  return (
+    str.substring(0, at) + replacement + str.substring(at + replacement.length)
+  );
+};
