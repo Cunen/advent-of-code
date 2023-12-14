@@ -23,6 +23,7 @@ import { pipeMaze } from "../2023-10/pipeMaze";
 import { cosmic } from "../2023-11/cosmicExpansion";
 import { hotspring } from "../2023-12/hotSprings";
 import { incidence } from "../2023-13/pointOfIncidence";
+import { parabolic } from "../2023-14/parabolicReflectorDish";
 
 export enum Perf {
   NotComplete = 0,
@@ -92,7 +93,13 @@ export const challenges: Challenge[] = [
     part2: Perf.Terrible,
   },
   { year: 2023, day: 13, fn: incidence, part1: Perf.Fast, part2: Perf.Fast },
-  { year: 2023, day: 14 },
+  {
+    year: 2023,
+    day: 14,
+    fn: parabolic,
+    part1: Perf.Terrible,
+    part2: Perf.Terrible,
+  },
   { year: 2023, day: 15 },
   { year: 2023, day: 16 },
   { year: 2023, day: 17 },
