@@ -24,6 +24,7 @@ import { cosmic } from "../2023-11/cosmicExpansion";
 import { hotspring } from "../2023-12/hotSprings";
 import { incidence } from "../2023-13/pointOfIncidence";
 import { parabolic } from "../2023-14/parabolicReflectorDish";
+import { lens } from "../2023-15/lensLibrary";
 
 export enum Perf {
   NotComplete = 0,
@@ -100,7 +101,7 @@ export const challenges: Challenge[] = [
     part1: Perf.Terrible,
     part2: Perf.Terrible,
   },
-  { year: 2023, day: 15 },
+  { year: 2023, day: 15, fn: lens, part1: Perf.Fast, part2: Perf.Fast },
   { year: 2023, day: 16 },
   { year: 2023, day: 17 },
   { year: 2023, day: 18 },
