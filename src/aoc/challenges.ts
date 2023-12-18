@@ -26,6 +26,7 @@ import { incidence } from "../2023-13/pointOfIncidence";
 import { parabolic } from "../2023-14/parabolicReflectorDish";
 import { lens } from "../2023-15/lensLibrary";
 import { floorLava } from "../2023-16/floorLava";
+import { lavaduct } from "../2023-18/lavaductLagoon";
 
 export enum Perf {
   NotComplete = 0,
@@ -111,7 +112,7 @@ export const challenges: Challenge[] = [
     part2: Perf.Terrible,
   },
   { year: 2023, day: 17 },
-  { year: 2023, day: 18 },
+  { year: 2023, day: 18, fn: lavaduct, part1: Perf.Ultra, part2: Perf.Ultra },
   { year: 2023, day: 19 },
   { year: 2023, day: 20 },
   { year: 2023, day: 21 },
