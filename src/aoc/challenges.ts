@@ -26,6 +26,7 @@ import { incidence } from "../2023-13/pointOfIncidence";
 import { parabolic } from "../2023-14/parabolicReflectorDish";
 import { lens } from "../2023-15/lensLibrary";
 import { floorLava } from "../2023-16/floorLava";
+import { crucible } from "../2023-17/clumsyCrucible";
 
 export enum Perf {
   NotComplete = 0,
@@ -110,7 +111,7 @@ export const challenges: Challenge[] = [
     part1: Perf.Terrible,
     part2: Perf.Terrible,
   },
-  { year: 2023, day: 17 },
+  { year: 2023, day: 17, fn: crucible },
   { year: 2023, day: 18 },
   { year: 2023, day: 19 },
   { year: 2023, day: 20 },
