@@ -88,13 +88,13 @@ export const pulse = async () => {
         casters["cm"].on,
       ].every(Boolean);
     }
-    if (godRun) console.log('True god run');
+    if (godRun) console.log("True god run");
     if (rx === 3847 && caster.name === "nr" && !godRun) {
-      console.log('RIP');
-    };
+      console.log("RIP");
+    }
     if (rx === 3847 && caster.name === "fn") {
-      console.log('SUCCESS');
-    };
+      console.log("SUCCESS");
+    }
 
     if (high) highCount++;
     else lowCount++;
@@ -114,8 +114,7 @@ export const pulse = async () => {
       }
       for (const c of caster.targets) run(c, newPulse);
       return;
-    }
-    else if (caster.conj) {
+    } else if (caster.conj) {
       // If all are on (high) - set caster off (low)
       const newPulse = !caster.senders.every((s) => s.on);
       caster.on = newPulse;
