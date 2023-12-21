@@ -1,4 +1,4 @@
-import { arrayLcm, findNumberValuesFromString, lcm, puzzleArray } from "../aoc/utils";
+import { arrayLcm, puzzleArray } from "../aoc/utils";
 import { minExample, prodInput, testInput } from "./input";
 
 interface Caster {
@@ -76,6 +76,26 @@ export const pulse = async () => {
   let rx = 0;
 
   const run = (caster: Caster, high: boolean) => {
+    let godRun = rx === 3847 && caster.name === "nr";
+    if (godRun) {
+      godRun = [
+        casters["kd"].on,
+        casters["jh"].on,
+        casters["cf"].on,
+        casters["nv"].on,
+        casters["df"].on,
+        casters["fd"].on,
+        casters["cm"].on,
+      ].every(Boolean);
+    }
+    if (godRun) console.log('True god run');
+    if (rx === 3847 && caster.name === "nr" && !godRun) {
+      console.log('RIP');
+    };
+    if (rx === 3847 && caster.name === "fn") {
+      console.log('SUCCESS');
+    };
+
     if (high) highCount++;
     else lowCount++;
 
@@ -95,8 +115,6 @@ export const pulse = async () => {
       for (const c of caster.targets) run(c, newPulse);
       return;
     }
-
-    // [Conjunction] (should wait?)
     else if (caster.conj) {
       // If all are on (high) - set caster off (low)
       const newPulse = !caster.senders.every((s) => s.on);
@@ -105,6 +123,7 @@ export const pulse = async () => {
         caster.loop = rx - caster.prevNum;
         caster.prevNum = rx;
       }
+      if (godRun) console.log(caster.targets);
       for (const c of caster.targets) run(c, newPulse);
       return;
     }
@@ -119,35 +138,26 @@ export const pulse = async () => {
     run(casters["broadcaster"], false);
   }
 
-  for (let i = 0; i < 5000000; i++) {
+  for (let i = 0; i < 3027; i++) {
     rx++;
     run(casters["broadcaster"], false);
   }
 
   console.log("Part 1", highCount * lowCount);
 
-  const nrBits = [
-    casters["kd"].loop,
-    casters["jh"].loop,
-    casters["cf"].loop,
-    casters["nv"].loop,
-    casters["df"].loop,
-    casters["fd"].loop,
-    casters["cm"].loop,
-  ];
+  // These three turn on and off during the same cycle
+  const nr = casters["nr"].loop; // 3847
+  const hh = casters["hh"].loop; // 4027
+  const lk = casters["lk"].loop; // 4003
+  const fh = casters["fh"].loop; // 3851
 
-  console.log(nrBits);
+  console.log(nr, hh, lk, fh);
 
-  const fn = arrayLcm(nrBits);
-  const hh = casters['hh'].loop;
-  const lk = casters['lk'].loop;
-  const fh = casters['fh'].loop;
-
-  console.log(fn, hh, lk, fh);
-
-  const nc = arrayLcm([fn, hh, lk, fh]);
+  // NC is the & module before rx
+  const nc = arrayLcm([3847, hh, lk, fh]);
 
   // (379048322907917650000) Too High
   // (127136628594688) Too Low
-  console.log("Part 2", nc);
+  // (238815727638557) Should Be Correct?
+  console.log("Part 2", nc, 238815727638557);
 };

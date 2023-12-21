@@ -115,7 +115,7 @@ export const challenges: Challenge[] = [
     part1: Perf.Terrible,
     part2: Perf.Terrible,
   },
-  { year: 2023, day: 17, fn: crucible },
+  { year: 2023, day: 17, fn: crucible, part1: Perf.Terrible, part2: Perf.Terrible },
   { year: 2023, day: 18, fn: lavaduct, part1: Perf.Ultra, part2: Perf.Ultra },
   { year: 2023, day: 19, fn: aplenty, part1: Perf.Ultra, part2: Perf.Ultra },
   { year: 2023, day: 20, fn: pulse, part1: Perf.Ultra },
