@@ -1,5 +1,5 @@
 import { arrayLcm, puzzleArray } from "../aoc/utils";
-import { minExample, prodInput, testInput } from "./input";
+import { prodInput } from "./input";
 
 interface Caster {
   name: string;
@@ -75,27 +75,26 @@ export const pulse = async () => {
   let highCount = 0;
   let rx = 0;
 
-  const run = (caster: Caster, high: boolean) => {
-    let godRun = rx === 3847 && caster.name === "nr";
-    if (godRun) {
-      godRun = [
-        casters["kd"].on,
-        casters["jh"].on,
-        casters["cf"].on,
-        casters["nv"].on,
-        casters["df"].on,
-        casters["fd"].on,
-        casters["cm"].on,
-      ].every(Boolean);
+  const flip = (caster: Caster, high: boolean) => {
+    // Reached output
+    if (caster.targets.length <= 0) return;
+    // [FlipFlop] ignores high pulse
+    else if (caster.flip && high) return;
+    // [FlipFlop] ()
+    else if (caster.flip || caster.conj) {
+      const newPulse = caster.flip
+        ? !caster.on
+        : !caster.senders.every((s) => s.on);
+      caster.on = newPulse;
+      // Store loop in memory
+      if (newPulse) {
+        caster.loop = rx - caster.prevNum;
+        caster.prevNum = rx;
+      }
     }
-    if (godRun) console.log("True god run");
-    if (rx === 3847 && caster.name === "nr" && !godRun) {
-      console.log("RIP");
-    }
-    if (rx === 3847 && caster.name === "fn") {
-      console.log("SUCCESS");
-    }
+  };
 
+  const run = (caster: Caster, high: boolean) => {
     if (high) highCount++;
     else lowCount++;
 
@@ -103,31 +102,19 @@ export const pulse = async () => {
     if (caster.targets.length <= 0) return;
     // [FlipFlop] ignores high pulse
     else if (caster.flip && high) return;
-    // [FlipFlop] ()
-    //
+    // [FlipFlop] low pulse
     else if (caster.flip) {
-      const newPulse = !caster.on;
-      caster.on = newPulse;
-      if (newPulse) {
-        caster.loop = rx - caster.prevNum;
-        caster.prevNum = rx;
-      }
-      for (const c of caster.targets) run(c, newPulse);
+      for (const c of caster.targets) flip(c, caster.on);
+      for (const c of caster.targets) run(c, caster.on);
       return;
     } else if (caster.conj) {
-      // If all are on (high) - set caster off (low)
-      const newPulse = !caster.senders.every((s) => s.on);
-      caster.on = newPulse;
-      if (newPulse) {
-        caster.loop = rx - caster.prevNum;
-        caster.prevNum = rx;
-      }
-      if (godRun) console.log(caster.targets);
-      for (const c of caster.targets) run(c, newPulse);
+      for (const c of caster.targets) flip(c, caster.on);
+      for (const c of caster.targets) run(c, caster.on);
       return;
     }
 
     // Broadcast / Passthrough
+    for (const c of caster.targets) flip(c, high);
     for (const c of caster.targets) run(c, high);
     return;
   };
@@ -137,26 +124,22 @@ export const pulse = async () => {
     run(casters["broadcaster"], false);
   }
 
+  console.log("Part 1", highCount * lowCount);
+
   for (let i = 0; i < 3027; i++) {
     rx++;
     run(casters["broadcaster"], false);
   }
 
-  console.log("Part 1", highCount * lowCount);
-
   // These three turn on and off during the same cycle
-  const nr = casters["nr"].loop; // 3847
+  const fn = casters["fn"].loop; // 3847
   const hh = casters["hh"].loop; // 4027
   const lk = casters["lk"].loop; // 4003
   const fh = casters["fh"].loop; // 3851
 
-  console.log(nr, hh, lk, fh);
-
   // NC is the & module before rx
-  const nc = arrayLcm([3847, hh, lk, fh]);
+  const p2 = arrayLcm([fn, hh, lk, fh]);
 
-  // (379048322907917650000) Too High
-  // (127136628594688) Too Low
-  // (238815727638557) Should Be Correct?
-  console.log("Part 2", nc, 238815727638557);
+  // Part 2: (238815727638557)
+  console.log("Part 2", p2);
 };
