@@ -7,24 +7,31 @@ const findShortestPath = (matrix: number[][]) => {
   let counter = 0;
   const go = (x: number, y: number, sum: number, block: string): number[] => {
     counter++;
-    if (counter % 10000000 === 0) {
-      console.log("Processed ", counter / 10000000, " 10mil ops");
+    if (counter % 100000000 === 0) {
+      console.log(
+        "Processed ",
+        counter / 100000000,
+        " 100mil ops",
+        lowestSoFar
+      );
     }
     const key = xyToKey(x, y);
-
     const outOfBounds = !matrix[y] || !matrix[y][x];
+    const last3 = block.substring(0, 3);
+    const backwards =
+      last3 === "rlr" || last3 === "lrl" || last3 === "udu" || last3 === "dud";
     const tooFar =
       block === "rrrr" ||
       block === "llll" ||
       block === "uuuu" ||
       block === "dddd";
-    const tooBig = sum > lowestSoFar || sum > 1016;
+    const tooBig = sum > lowestSoFar || sum > 970;
 
     const expectedFactor = 4.25;
     const xyPrune = x + y > 10 && sum > (x + y) * expectedFactor;
 
     // Run Stopped
-    if (outOfBounds || tooFar || tooBig || xyPrune) return [];
+    if (outOfBounds || tooFar || tooBig || backwards || xyPrune) return [];
     // Run Complete
     const len = matrix.length - 1;
     if (x === len && y === len) {
@@ -34,11 +41,10 @@ const findShortestPath = (matrix: number[][]) => {
 
     // Do some prune-caching on visited paths
     const newSum = sum + matrix[y][x];
-    const canContinue = newSum - 2 < (visited[key] || Infinity);
+    const dirKey = block + key;
+    const canContinue = newSum < (visited[dirKey] || Infinity);
     if (!canContinue) return [];
-    visited[key] = newSum;
-
-
+    visited[dirKey] = newSum;
 
     const right = go(x + 1, y, newSum, "r" + block.substring(0, 3));
     const down = go(x, y + 1, newSum, "d" + block.substring(0, 3));
@@ -60,5 +66,7 @@ export const crucible = async () => {
 
   // (1016) too high
   // (1002) too high
+  // (960) is wrong
+  // (963) is correct
   console.log("Part 1:", findShortestPath(array));
 };
