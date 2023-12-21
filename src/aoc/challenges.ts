@@ -29,6 +29,8 @@ import { floorLava } from "../2023-16/floorLava";
 import { crucible } from "../2023-17/clumsyCrucible";
 import { lavaduct } from "../2023-18/lavaductLagoon";
 import { aplenty } from "../2023-19/aplenty";
+import { pulse } from "../2023-20/pulsePropagation";
+import { step } from "../2023-21/stepCounter";
 
 export enum Perf {
   NotComplete = 0,
@@ -116,8 +118,8 @@ export const challenges: Challenge[] = [
   { year: 2023, day: 17, fn: crucible },
   { year: 2023, day: 18, fn: lavaduct, part1: Perf.Ultra, part2: Perf.Ultra },
   { year: 2023, day: 19, fn: aplenty, part1: Perf.Ultra, part2: Perf.Ultra },
-  { year: 2023, day: 20 },
-  { year: 2023, day: 21 },
+  { year: 2023, day: 20, fn: pulse, part1: Perf.Ultra },
+  { year: 2023, day: 21, fn: step, part1: Perf.Ultra },
   { year: 2023, day: 22 },
   { year: 2023, day: 23 },
   { year: 2023, day: 24 },
