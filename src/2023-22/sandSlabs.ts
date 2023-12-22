@@ -80,9 +80,6 @@ const letTheBricksFall = (bricks: Bricks) => {
   const tower: string[][][] = [];
   addFloors(tower);
   for (const brick of Object.values(bricks)) {
-    if (brick.z < tower.length) {
-      console.log("Alert");
-    }
     const collisions = new Set<string>();
     let topFloor = tower.length - 1;
     // Check XY Collisions
@@ -151,17 +148,29 @@ const removeBricksOneByOne = (bricks: Bricks, essentials: Set<string>) => {
 };
 
 export const slabs = () => {
+  const start = performance.now();
+
   const bricks = getBricks();
   letTheBricksFall(bricks);
 
   // These bricks cannot be removed
   const essentials = getEssentialKeys(bricks);
 
+  const end = performance.now();
+
   // Part 1 (405)
-  console.log("Part 1", Object.values(bricks).length - essentials.size);
+  console.log(
+    "Part 1",
+    Object.values(bricks).length - essentials.size,
+    (end - start).toFixed(1),
+    "ms"
+  );
 
   const fallenBricks = removeBricksOneByOne(bricks, essentials);
 
+  const end2 = performance.now();
+
   // Part 2 (61297)
-  console.log("Part 2:", fallenBricks);
+  console.log("Part 2:", fallenBricks, (end2 - end).toFixed(1), "ms");
+  console.log("Total:", (end2 - start).toFixed(1), "ms");
 };
