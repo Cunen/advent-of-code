@@ -1,5 +1,5 @@
 import { count } from "console";
-import { puzzleArray, xyToKey } from "../aoc/utils";
+import { findNumberValuesFromString, puzzleArray, xyToKey } from "../aoc/utils";
 import { prodInput, testInput } from "./input";
 
 interface Brick {
@@ -19,7 +19,11 @@ type Bricks = Record<string, Brick>;
 
 const getBricks = () => {
   const bricks: Bricks = {};
-  for (const row of puzzleArray(prodInput)) {
+  const sortedArray = puzzleArray(prodInput);
+  sortedArray.sort((a, b) => {
+    return findNumberValuesFromString(a)[2] - findNumberValuesFromString(b)[2];
+  });
+  for (const row of sortedArray) {
     const [a, b] = row.split("~");
     const [x, y, z] = a.split(",").map(Number);
     const [x2, y2, z2] = b.split(",").map(Number);
@@ -72,11 +76,13 @@ const addBrickToTower = (
   }
 };
 
-export const slabs = () => {
-  const bricks = getBricks();
+const letTheBricksFall = (bricks: Bricks) => {
   const tower: string[][][] = [];
   addFloors(tower);
   for (const brick of Object.values(bricks)) {
+    if (brick.z < tower.length) {
+      console.log("Alert");
+    }
     const collisions = new Set<string>();
     let topFloor = tower.length - 1;
     // Check XY Collisions
@@ -105,19 +111,57 @@ export const slabs = () => {
       }
     }
   }
+};
 
+const getEssentialKeys = (bricks: Bricks) => {
   const essentials = new Set<string>();
-  const vals = Object.values(bricks);
   for (const brick of Object.values(bricks)) {
     // If the brick lays on only a single block, it is essential
     if (brick.restsOn.length === 1) essentials.add(brick.restsOn[0].key);
   }
+  return essentials;
+};
 
-  console.log(vals.length);
-  console.log(bricks);
-  console.log(essentials);
+const removeBricksOneByOne = (bricks: Bricks, essentials: Set<string>) => {
+  let count = 0;
+  for (const key of essentials) {
+    const fallen = new Set<string>();
+    const drop = (bs: Brick[], sum = 0): number => {
+      const potential = new Set<string>();
+      // Mark bricks as fallen
+      for (const b of bs) {
+        for (const support of b.supports) potential.add(support.key);
+        fallen.add(b.key);
+      }
+      const next: Brick[] = [];
+      // Find bricks that fill fall next
+      for (const pot of potential) {
+        const br = bricks[pot];
+        // If all support bricks have falled, next one will fall too.
+        if (br.restsOn.every((rest) => fallen.has(rest.key))) next.push(br);
+      }
+      if (next.length > 0) return drop(next, next.length + sum);
+      return sum;
+    };
+    // Count bricks that fell for each essential brick
+    const bricksThatFell = drop([bricks[key]]);
+    count += bricksThatFell;
+  }
+  return count;
+};
 
-  // Part 1 (423 - Too High)
-  // Expecting (405)
-  console.log("Part 1", vals.length - essentials.size);
+export const slabs = () => {
+  const bricks = getBricks();
+  letTheBricksFall(bricks);
+
+  // These bricks cannot be removed
+  const essentials = getEssentialKeys(bricks);
+
+  // Part 1 (405)
+  console.log("Part 1", Object.values(bricks).length - essentials.size);
+
+  const fallenBricks = removeBricksOneByOne(bricks, essentials);
+
+  // Part 2 (61297)
+  console.log("Part 2:", fallenBricks);
 };
