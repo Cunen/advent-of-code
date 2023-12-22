@@ -62,7 +62,7 @@ export const uniqueNumber = (number: number) => {
 export const puzzleArray = (string: string) => string.split("\n");
 
 /** Convers X and Y to a "x-y" string key */
-export const xyToKey = (x: number, y: number) => `${x}-${y}`;
+export const xyToKey = (x: number, y: number, z?: number) => `${x}-${y}` + (z ? `-${z}`: '');
 
 /** Converts rows to columns */
 export const rowsToColumns = (rows: string[]) => {
