@@ -131,7 +131,7 @@ export const challenges: Challenge[] = [
   { year: 2023, day: 20, fn: pulse, part1: Perf.Ultra, part2: Perf.Fast },
   { year: 2023, day: 21, fn: step, part1: Perf.Fast, part2: Perf.Fast },
   { year: 2023, day: 22, fn: slabs, part1: Perf.Fast, part2: Perf.Fast },
-  { year: 2023, day: 23, fn: walk },
+  { year: 2023, day: 23, fn: walk, part1: Perf.Fast, part2: Perf.Terrible },
   { year: 2023, day: 24, fn: f24 },
   { year: 2023, day: 25, fn: f25 },
   {
