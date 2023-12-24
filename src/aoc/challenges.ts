@@ -33,7 +33,7 @@ import { pulse } from "../2023-20/pulsePropagation";
 import { step } from "../2023-21/stepCounter";
 import { slabs } from "../2023-22/sandSlabs";
 import { walk } from "../2023-23/aLongWalk";
-import { f24 } from "../2023-24/24";
+import { odds } from "../2023-24/neverTellMeTheOdds";
 import { f25 } from "../2023-25/25";
 
 export enum Perf {
@@ -132,7 +132,7 @@ export const challenges: Challenge[] = [
   { year: 2023, day: 21, fn: step, part1: Perf.Fast, part2: Perf.Fast },
   { year: 2023, day: 22, fn: slabs, part1: Perf.Fast, part2: Perf.Fast },
   { year: 2023, day: 23, fn: walk, part1: Perf.Fast, part2: Perf.Terrible },
-  { year: 2023, day: 24, fn: f24 },
+  { year: 2023, day: 24, fn: odds },
   { year: 2023, day: 25, fn: f25 },
   {
     year: 2022,
